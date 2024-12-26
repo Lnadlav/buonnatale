@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mickey et Vidéo</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black; /* Fond noir */
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Mickey (bouton) */
+        .mickey {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background-color: white; /* Tête de Mickey */
+            border-radius: 50%;
+            margin-bottom: 20px; /* Espace entre Mickey et la vidéo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer; /* Rendre Mickey cliquable */
+            font-size: 18px;
+            color: black;
+            font-weight: bold;
+            font-family: "Comic Sans MS", cursive, sans-serif; /* Police Disney-like */
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.6); /* Effet lumineux */
+        }
+
+        .mickey::before, .mickey::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: white; /* Oreilles de Mickey */
+            border-radius: 50%;
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.6);
+        }
+
+        .mickey::before {
+            top: -60px; /* Position de l'oreille gauche */
+            left: -50px;
+        }
+
+        .mickey::after {
+            top: -60px; /* Position de l'oreille droite */
+            right: -50px;
+        }
+
+        /* Vidéo */
+        video {
+            max-width: 100%;
+            height: auto;
+            display: none; /* Cachée au départ */
+            border-radius: 15px; /* Coins arrondis */
+            box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Formulaire */
+        .form-container {
+            display: none; /* Caché au départ */
+            margin-top: 20px;
+        }
+
+        .form-container form {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: black;
+            text-align: left;
+        }
+
+        .form-container form input,
+        .form-container form button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Image après soumission */
+        .submitted-image {
+            display: none;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <!-- Mickey -->
+    <div class="mickey" id="playButton">
+        Cliquez ici
+    </div>
+
+    <!-- Vidéo -->
+    <video id="video" width="640" height="360" controls>
+        <source src="mickey.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture vidéo.
+    </video>
+
+    <!-- Formulaire -->
+    <div class="form-container" id="formContainer">
+        <form id="form">
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" placeholder="Votre nom" required>
+            
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" placeholder="Votre email" required>
+            
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+
+    <!-- Image après soumission -->
+    <img src="invit.gif" alt="Merci !" id="thankYouImage" class="submitted-image" width="300">
+
+    <script>
+        // Affiche la vidéo et le formulaire au clic sur Mickey
+        document.getElementById('playButton').addEventListener('click', () => {
+            const video = document.getElementById('video');
+            const formContainer = document.getElementById('formContainer');
+            video.style.display = 'block'; // Affiche la vidéo
+            video.play(); // Lance la vidéo avec le son
+            formContainer.style.display = 'block'; // Affiche le formulaire
+            document.getElementById('playButton').style.display = 'none'; // Cache Mickey
+        });
+
+        // Remplace le formulaire par une image après soumission
+        document.getElementById('form').addEventListener('submit', (e) => {
+            e.preventDefault(); // Empêche le rechargement de la page
+            const formContainer = document.getElementById('formContainer');
+            const thankYouImage = document.getElementById('thankYouImage');
+            const video = document.getElementById('video');
+
+            formContainer.style.display = 'none'; // Cache le formulaire
+            thankYouImage.style.display = 'block'; // Affiche l'image
+            video.style.display = 'none'; // Cache la vidéo
+        });
+    </script>
+</body>
+</html>
